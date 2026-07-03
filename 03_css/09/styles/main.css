@@ -1,0 +1,31 @@
+.box1 {
+    border: 1px solid; 
+    width: 150px; 
+    height: 120px;
+    display: flex; /* 글자를 가운데 두기 위한 준비*/
+    align-items:  center; /*세로 가운데 정렬*/
+    justify-content: center; /* 가로 가운데 정렬*/
+    background-color: hotpink;
+    color: white;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+    margin: 50px;
+}
+
+.box:hover {
+    transform: rotate(10deg) scale(1.2);
+}
+
+.box2 {
+    border: 1px solid; 
+    width: 150px; 
+    height: 120px;
+    display: flex; /* 글자를 가운데 두기 위한 준비*/
+    align-items:  center; /*세로 가운데 정렬*/
+    justify-content: center; /* 가로 가운데 정렬*/
+    background-color: lightseagreen;
+    color: black;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+    margin: 50px;
+}

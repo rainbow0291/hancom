@@ -1,0 +1,25 @@
+.menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;   
+}
+
+/* li 부분 디자인 입히기 */
+#li1 {
+    background-color: turquoise;
+    border: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+#li2 {
+    background-color: greenyellow;
+    border: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+#li3 {
+    background-color: lightsalmon;
+    border: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}

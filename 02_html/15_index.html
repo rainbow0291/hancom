@@ -1,0 +1,32 @@
+<!DOCTYPE html>           <!-- "이건 HTML 문서야" 선언 -->
+<html lang="ko">          <!-- 문서 시작, 한국어 페이지 -->
+    <head>                    <!-- 화면엔 안 보이는 준비 칸 -->
+        <meta charset="UTF-8">  <!-- 한글 안 깨지게 -->
+        <title>
+            폼 그리고 입력
+        </title>     <!-- 브라우저 탭에 뜨는 이름 -->
+    </head>
+    <body>                    <!-- 화면에 보이는 진짜 내용 칸 -->
+        <!-- form = 입력칸들을 담는 묶음 상자 -->
+        <form>   <!-- form = 입력칸 묶음 상자 -->
+            <!-- label=설명 글자 / input=글자 칸 -->
+            <label>이름: <input type="text" placeholder="이름 입력"></label>   
+            <br>
+            <hr>
+             <!-- input type=number → 숫자 칸 -->
+            <label>목표:<input type="number" placeholder="HTML 능력 목표치 1 ~ 10"></label>
+            <br>
+            <hr>
+            <label>좋아하는 색상:<input type="color" placeholder="좋아하는 색상은?"></label>
+            <br>
+            <hr>
+            <label>생일:<input type="datetime-local"></label>
+            <br>
+            <hr>
+            <!-- 누르는 버튼 -->
+            <button type="submit">
+                보내기
+            </button>   
+        </form>
+    </body>
+</html>

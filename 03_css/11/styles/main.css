@@ -1,0 +1,14 @@
+.neon {
+   /*border: 1px solid red;*/
+   width: 200px;
+   height: 100px;
+   display: flex;
+   align-items: center; 
+   justify-content: center;
+   border-radius: 20px;
+   background: linear-gradient(135deg, #ec4899, #8b5cf6);
+   color: white;
+   font-size: 22px; 
+   font-weight: bold;
+   box-shadow: 0 0 25px rgba(236, 72, 153, 0.7); 
+}

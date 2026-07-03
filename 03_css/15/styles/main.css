@@ -1,0 +1,28 @@
+/* :root = 문서 전체의 뿌리 => 어디서든 꺼내 쓸 수 있음 (안에 변수 정의) */
+
+:root {
+   --main-color: rgb(208, 126, 126); /*메인 색(이 한 줄만 고치면 전체 반영) */
+   --gap: 12px; /* 버튼 사이 간격 */
+   --body-color: rgb(197, 227, 196);
+}
+
+body {
+   background: var(--body-color);
+}
+
+.row {
+   display: flex;
+   gap: var(--gap);
+}
+
+/* 변수 꺼내 쓰기 */
+.btn {
+   padding: 8px 18px;
+   border: none;
+   border-radius: 8px;
+   background: var(--main-color);
+   color:white;
+   font-weight: 700;
+   cursor: pointer; 
+   
+}
