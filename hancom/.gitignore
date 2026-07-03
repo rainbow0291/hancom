@@ -4,4 +4,4 @@
 # 이미지 무시
 *.jpeg
 *.png
-
+node_modules/
