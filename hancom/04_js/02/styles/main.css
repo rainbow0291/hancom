@@ -1,0 +1,11 @@
+#title {
+    color: tomato;
+    font-size: 40px;
+
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;  /*손가락 모양 표시*/
+
+}
