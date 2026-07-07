@@ -1,0 +1,118 @@
+<!--
+=======================================================
+  기획서 — SCENTPICK
+=======================================================
+# SCENTPICK
+### 프로젝트 기획서 | PROJECT PROPOSAL
+
+> 향수에 관심 있는 사람을 위한 고급 브랜드 TOP 10 소개 사이트
+
+---
+
+## 목표 — 왜 만드는가
+
+- 온라인에서 향수의 종류와 향 설명에 대한 상세 정보를 제공하여, 오프라인 매장에서 구매 전 반드시 거쳐야 했던 시향 단계의 부담을 줄인다.
+- 브랜드별 역사·특징·대표 향수를 카드 클릭 한 번으로 확인할 수 있는 직관적인 정보 탐색 경험을 제공한다.
+- HTML·CSS·JavaScript 기초 문법(DOM 조작, 이벤트, 배열/객체, 클래스 등)을 실제 프로젝트를 통해 실습한다.
+
+---
+
+## 핵심 기능
+
+### 01. 카드 목록
+10개 향수 브랜드를 그리드 형태의 카드로 나열하여 한눈에 비교하고 탐색할 수 있도록 구성한다.
+
+### 02. 상세 모달
+카드를 클릭하면 해당 브랜드의 역사·특징·대표 향수 정보가 담긴 팝업(모달)이 나타난다.
+
+### 03. 검색 기능
+검색창에 브랜드 이름을 입력하면 input 이벤트를 통해 카드 목록이 실시간으로 필터링된다.
+
+---
+
+## 화면 구성
+
+| 영역 | 구성 내용 |
+|------|-----------|
+| **Header** | 사이트 이름(SCENTPICK) · 브랜드 검색창 · 전체/즐겨찾기 카운터 |
+| **Main** | 10개 브랜드 카드가 배치된 그리드形 목록 화면 |
+| **Modal** | 클릭한 브랜드의 상세 정보 팝업 — 좌측 이미지 · 우측 브랜드 설명 및 향수 노트로 좌우 분할 구성 |
+
+---
+=======================================================
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCENTPICK — 향수 브랜드 TOP 10</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <header>
+    <p class="header-sub">Luxury Fragrance Guide</p>
+    <h1>SCENTPICK</h1>
+    <p class="header-desc">세계 고급 향수 브랜드 TOP 10</p>
+    <!-- 검색창 — input 이벤트 -->
+    <input type="text" id="search" class="search" placeholder="브랜드 검색...">
+    <!-- 카운터 — textContent로 업데이트 -->
+    <p class="counter" id="counter"></p>
+  </header>
+
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <!-- 모달 -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <button class="modal-back" id="modal-close">← 뒤로가기</button>
+
+      <!-- 상단 카드: 이미지(좌) + 정보(우) -->
+      <div class="modal-top">
+        <div class="modal-img-side">
+          <div id="modal-logo"></div>
+        </div>
+        <div class="modal-info-side">
+          <p class="modal-brand" id="modal-country"></p>
+          <h2 class="modal-name" id="modal-name"></h2>
+          <div class="modal-tags" id="modal-tags"></div>
+          <p class="modal-desc" id="modal-desc"></p>
+          <div class="modal-actions">
+            <button class="action-btn" id="btn-fav">⭐ 즐겨찾기</button>
+            <button class="action-btn">👍 좋아요</button>
+            <button class="action-btn">👎 싫어요</button>
+          </div>
+          <button class="buy-btn">구매 사이트 이용</button>
+        </div>
+      </div>
+
+      <!-- 하단 카드: 향수 노트 구성 -->
+      <div class="modal-notes">
+        <h3 class="notes-title">향수 노트 구성</h3>
+        <p class="notes-section-label">메인 어코드</p>
+        <div class="chord-list" id="modal-chords"></div>
+        <div class="notes-grid">
+          <div class="notes-col">
+            <p class="notes-col-label">Top Notes</p>
+            <div class="note-items" id="modal-top-notes"></div>
+          </div>
+          <div class="notes-col">
+            <p class="notes-col-label">Middle Notes</p>
+            <div class="note-items" id="modal-middle-notes"></div>
+          </div>
+          <div class="notes-col">
+            <p class="notes-col-label">Base Notes</p>
+            <div class="note-items" id="modal-base-notes"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
