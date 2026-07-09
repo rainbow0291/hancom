@@ -1,0 +1,30 @@
+/* .card {
+    border: 3px solid white;
+    border-radius: 8px;
+    color: blue;
+    background-color: lightpink;
+    border-color: coral;
+    padding: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.card {
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(to right, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+    min-height: 200px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);}
