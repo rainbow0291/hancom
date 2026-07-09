@@ -1,0 +1,57 @@
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    transition: all 0.3s eas
+}
+
+.avatar-container:hover {
+    transform: translateY(-5
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.avatar-name {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-status {
+    font-size: 48px;
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.avatar-status:hover {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* 온라인 상태 */
+.online {
+    color: #4CAF50;
+    animation: pulse 2s infinite;
+}
+
+/* 오프라인 상태 */
+.offline {
+    color: #999;
+    opacity: 0.6;
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
