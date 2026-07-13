@@ -1,0 +1,254 @@
+.home-container {
+  width: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100vh;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 255, 255, 0.05) 35px,
+      rgba(255, 255, 255, 0.05) 70px
+    );
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section h1 {
+  font-size: 2.8em;
+  margin: 0 0 15px 0;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.hero-section > div > p:first-of-type {
+  font-size: 1.3em;
+  margin: 0 0 20px 0;
+  opacity: 0.95;
+  font-weight: 600;
+}
+
+.hero-description {
+  font-size: 1em;
+  opacity: 0.9;
+  line-height: 1.7;
+  margin-bottom: 0 !important;
+}
+
+.features-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+}
+
+.feature-icon {
+  font-size: 3.5em;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 1.6em;
+  color: #1e293b;
+  margin: 15px 0 10px 0;
+  font-weight: 800;
+}
+
+.feature-card p {
+  color: #64748b;
+  margin: 10px 0 15px 0;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.feature-card li {
+  color: #475569;
+  padding: 8px 0;
+  font-size: 0.9em;
+}
+
+.feature-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.feature-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.feature-btn:active {
+  transform: translateY(-1px);
+}
+
+.info-section {
+  background: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.info-section h2 {
+  font-size: 2.2em;
+  color: #1e293b;
+  margin-bottom: 40px;
+  font-weight: 800;
+}
+
+.info-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.info-item {
+  padding: 25px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(135deg, #f5f7ff 0%, #f8f5ff 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.info-icon {
+  font-size: 2.5em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.info-item h4 {
+  font-size: 1.2em;
+  color: #1e293b;
+  margin: 10px 0 8px 0;
+  font-weight: 700;
+}
+
+.info-item p {
+  color: #64748b;
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2em;
+  }
+
+  .hero-section > div > p:first-of-type {
+    font-size: 1.1em;
+  }
+
+  .hero-description {
+    font-size: 0.9em;
+  }
+
+  .features-section {
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 20px;
+  }
+
+  .info-section h2 {
+    font-size: 1.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 50px 15px;
+  }
+
+  .hero-section h1 {
+    font-size: 1.5em;
+  }
+
+  .hero-section > div > p:first-of-type {
+    font-size: 1em;
+  }
+
+  .hero-description {
+    font-size: 0.85em;
+  }
+
+  .features-section {
+    padding: 30px 15px;
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .info-section h2 {
+    font-size: 1.5em;
+  }
+}
