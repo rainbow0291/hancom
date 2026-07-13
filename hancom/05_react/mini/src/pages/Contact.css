@@ -1,0 +1,107 @@
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-container h1 {
+  font-size: 1.8em;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  padding: 10px 10px;
+  background: linear-gradient(135deg, #7fff00 0%, #1e90ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.contact-subtitle {
+  font-size: 1.2em;
+  color: #999;
+  margin-bottom: 50px;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 2px solid transparent;
+}
+
+.contact-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  border-color: #1e90ff;
+}
+
+.contact-link.github:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.contact-link.blog:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.contact-link .icon {
+  font-size: 2.5em;
+  flex-shrink: 0;
+}
+
+.contact-link .text {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #1e293b;
+  flex: 1;
+  text-align: left;
+}
+
+.contact-link .url {
+  font-size: 0.9em;
+  color: #888;
+  font-weight: 500;
+  padding: 6px 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .contact-container {
+    padding: 40px 20px;
+  }
+
+  .contact-container h1 {
+    font-size: 1.8em;
+  }
+
+  .contact-link {
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contact-link .text {
+    text-align: center;
+  }
+
+  .contact-link .url {
+    font-size: 0.85em;
+  }
+}
