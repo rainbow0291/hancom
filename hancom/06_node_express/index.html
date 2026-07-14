@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css">
+    <title>사용자 그리드</title>
+</head>
+<body>
+    <div class="container">
+    <div class="header">
+        <h1>👥 반 배치도</h1>
+        <p>4행 5열 그리드로 배열된 사용자 목록</p>
+    </div>
+
+    <div class="card">
+            <div class="card-id">`${user.id}`</div>
+            <div class="card-name">`${user.name}`</div>
+        </div>
+
+    <div class="info-box">
+        <div class="info-card">
+        <div class="info-label">전체 사용자</div>
+        <div class="info-value">`${users.length + idsToDelete.length}`</div>
+        </div>
+        <div class="info-card">
+        <div class="info-label">삭제된 사용자</div>
+        <div class="info-value">`${idsToDelete.length}`</div>
+        </div>
+        <div class="info-card">
+        <div class="info-label">남은 사용자</div>
+        <div class="info-value">`${users.length}`</div>
+        </div>
+        <div class="info-card">
+        <div class="info-label">배열 방식</div>
+        <div class="info-value">4행5열</div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-title">📊 남은 사용자 목록 (`${users.length}`명)</div>
+
+        <body class="grid">
+
+</div>
+
+          <div class="deleted-section">
+            <div class="deleted-title">🗑️ 삭제된 사용자 (`${idsToDelete.length}`명)</div>
+            <div class="deleted-list">
+              `${idsToDelete.map(id => `<span class="deleted-tag">ID: ${id}</span>`).join('')}`
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          ✨ 삭제 완료 - `${new Date().toLocaleString('ko-KR')}`
+        </div>
+      </div>
+        <script src="scripts/main.js"></script>    
+    </body>
+    </html>            
+       
