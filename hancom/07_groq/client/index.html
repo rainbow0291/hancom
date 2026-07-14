@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groq AI Chat</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <!-- ✅ 사이드바 -->
+  <div class="sidebar">
+    <!-- 로고 영역 -->
+    <div class="logo-section">
+      <div class="logo">
+        <div class="logo-circle">
+          <div class="logo-dot"></div>
+        </div>
+      </div>
+      <div class="logo-text">
+        <h2>챗봇</h2>
+        <p>AI Chat</p>
+      </div>
+    </div>
+
+    <!-- 새 대화 -->
+    <div class="sidebar-section">
+      <button class="new-chat-btn" id="newChat">+ 새 대화</button>
+    </div>
+
+    <!-- 대화 기록 -->
+    <div class="sidebar-section">
+      <h3>대화 기록</h3>
+      <div id="history"></div>
+    </div>
+  </div>
+
+  <!-- ✅ 메인 콘텐츠 -->
+  <div class="main">
+    <!-- 헤더 -->
+    <div class="header">
+      <h1>Groq AI Chat</h1>
+      <p>고속 AI 어시스턴트와 대화하세요</p>
+    </div>
+    <img src="image.png" width="400" alt="챗봇 이미지">
+
+    <!-- 채팅 영역 -->
+    <div class="chat-container" id="chatContainer">
+      <!-- 초기 환영 화면 -->
+      <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+          <div class="welcome-logo">
+            <div class="logo-large">
+              <div class="logo-circle-large">
+                <div class="logo-dot-large"></div>
+              </div>
+            </div>
+          </div>
+          <h2> AI Chat</h2>
+          <p>무엇을 도와드릴까요?</p>
+          <div class="welcome-suggestions">
+            <div class="suggestion-item">💡 질문하기</div>
+            <div class="suggestion-item">📝 텍스트 작성</div>
+            <div class="suggestion-item">🔍 분석하기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 입력 영역 -->
+    <div class="input-area">
+      <div class="input-group">
+        <input
+          id="q"
+          type="text"
+          placeholder="메시지를 입력하세요... (Shift+Enter로 줄바꿈)"
+          autocomplete="off"
+        />
+        <button id="btn">보내기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
