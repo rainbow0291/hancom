@@ -39,7 +39,7 @@ function addStreamingMessage() {
   return contentDiv
 }
 
-// ✅ 기존 코드: '보내기' 버튼에 클릭 동작 연결
+//  기존 코드: '보내기' 버튼에 클릭 동작 연결
 document.getElementById('btn').addEventListener('click', () => {
   // id="q" 입력칸에 적은 질문 꺼내기
   const prompt = document.getElementById('q').value
@@ -80,11 +80,14 @@ document.getElementById('btn').addEventListener('click', () => {
       setTimeout(() => {
         document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight
       }, 0)
+      // 정상 답변을 받으면 작은 축하 컨페티
+      if (data.reply) launchConfetti(50)
     })
     // 서버가 안 켜져 있으면 안내 메시지
     .catch(err => {
       streamDiv.innerHTML = ''
       streamDiv.textContent = '❌ 서버 안 켜짐? (server서 node index.js 먼저)'
+      streamDiv.classList.add('error')
     })
     // 요청 완료 후 버튼 활성화
     .finally(() => {
@@ -120,21 +123,124 @@ document.getElementById('newChat').addEventListener('click', () => {
             </div>
           </div>
         </div>
-        <h2>Claude AI Chat</h2>
+        <h2>AI Chat</h2>
         <p>무엇을 도와드릴까요?</p>
-        <div class="welcome-suggestions">
-          <div class="suggestion-item">💡 질문하기</div>
-          <div class="suggestion-item">📝 텍스트 작성</div>
-          <div class="suggestion-item">🔍 분석하기</div>
-        </div>
       </div>
     </div>
   `
   document.getElementById('q').value = ''
   document.getElementById('q').focus()
+  launchConfetti(80)
 })
 
-// ✅ 페이지 로드 시 입력칸 포커스
+// 🎉 컨페티 효과 (바닐라 JS, 외부 라이브러리 없음)
+// 캔버스에 핑크/아이보리 색종이 조각을 뿌리고, 중력/회전을 주며 서서히 사라지게 함
+const confettiCanvas = document.getElementById('confettiCanvas')
+const confettiCtx = confettiCanvas.getContext('2d')
+let confettiParticles = []
+let confettiAnimationId = null
+
+function resizeConfettiCanvas() {
+  confettiCanvas.width = window.innerWidth
+  confettiCanvas.height = window.innerHeight
+}
+window.addEventListener('resize', resizeConfettiCanvas)
+resizeConfettiCanvas()
+
+const CONFETTI_COLORS = ['#ff8fa3', '#ffb6d9', '#ffd1e3', '#ff6b9d', '#fffbf8', '#ffe4ee']
+
+function createConfettiParticle() {
+  return {
+    x: Math.random() * confettiCanvas.width,
+    y: -20 - Math.random() * confettiCanvas.height * 0.3,
+    size: 6 + Math.random() * 6,
+    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+    speedY: 2 + Math.random() * 3,
+    speedX: (Math.random() - 0.5) * 2,
+    rotation: Math.random() * 360,
+    rotationSpeed: (Math.random() - 0.5) * 10,
+    opacity: 1,
+    shape: Math.random() > 0.5 ? 'circle' : 'square'
+  }
+}
+
+function launchConfetti(count = 120) {
+  for (let i = 0; i < count; i++) {
+    confettiParticles.push(createConfettiParticle())
+  }
+  if (!confettiAnimationId) {
+    confettiAnimationId = requestAnimationFrame(animateConfetti)
+  }
+}
+
+function animateConfetti() {
+  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height)
+
+  confettiParticles.forEach(p => {
+    p.y += p.speedY
+    p.x += p.speedX
+    p.rotation += p.rotationSpeed
+    // 화면 하단 70% 지점부터 서서히 투명해지며 사라짐
+    if (p.y > confettiCanvas.height * 0.7) {
+      p.opacity -= 0.02
+    }
+
+    confettiCtx.save()
+    confettiCtx.globalAlpha = Math.max(p.opacity, 0)
+    confettiCtx.translate(p.x, p.y)
+    confettiCtx.rotate((p.rotation * Math.PI) / 180)
+    confettiCtx.fillStyle = p.color
+    if (p.shape === 'circle') {
+      confettiCtx.beginPath()
+      confettiCtx.arc(0, 0, p.size / 2, 0, Math.PI * 2)
+      confettiCtx.fill()
+    } else {
+      confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size)
+    }
+    confettiCtx.restore()
+  })
+
+  // 화면 밖으로 나갔거나 완전히 투명해진 조각은 제거
+  confettiParticles = confettiParticles.filter(
+    p => p.y < confettiCanvas.height + 40 && p.opacity > 0
+  )
+
+  if (confettiParticles.length > 0) {
+    confettiAnimationId = requestAnimationFrame(animateConfetti)
+  } else {
+    confettiAnimationId = null
+  }
+}
+
+//  페이지 로드 시 입력칸 포커스 + 환영 컨페티
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('q').focus()
+  launchConfetti(140)
 })
+
+//  모바일 사이드바 열기/닫기 (오프캔버스 드로어)
+const sidebarPanel = document.getElementById('sidebarPanel')
+const sidebarToggle = document.getElementById('sidebarToggle')
+const sidebarBackdrop = document.getElementById('sidebarBackdrop')
+
+function openSidebar() {
+  sidebarPanel.classList.add('open')
+  sidebarBackdrop.classList.add('open')
+  sidebarToggle.setAttribute('aria-expanded', 'true')
+}
+
+function closeSidebar() {
+  sidebarPanel.classList.remove('open')
+  sidebarBackdrop.classList.remove('open')
+  sidebarToggle.setAttribute('aria-expanded', 'false')
+}
+
+sidebarToggle.addEventListener('click', () => {
+  sidebarPanel.classList.contains('open') ? closeSidebar() : openSidebar()
+})
+
+sidebarBackdrop.addEventListener('click', closeSidebar)
+
+// 모바일에서 새 대화를 시작하면 드로어를 자동으로 닫음
+document.getElementById('newChat').addEventListener('click', closeSidebar)
+

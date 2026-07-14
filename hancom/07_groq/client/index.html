@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Groq 기반 초고속 AI 어시스턴트와 대화하는 챗봇 웹 클라이언트">
+  <meta name="theme-color" content="#ff8fa3">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23ff6b9d'/%3E%3Ccircle cx='12' cy='12' r='5' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='1.4' fill='white'/%3E%3C/svg%3E">
   <title>Groq AI Chat</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
   <!-- ✅ 사이드바 -->
-  <div class="sidebar">
+  <div class="sidebar" id="sidebarPanel">
     <!-- 로고 영역 -->
     <div class="logo-section">
       <div class="logo">
@@ -34,17 +37,38 @@
     </div>
   </div>
 
-  <!-- ✅ 메인 콘텐츠 -->
+  <!-- 모바일 사이드바 배경 오버레이 -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!--  메인 콘텐츠 -->
   <div class="main">
     <!-- 헤더 -->
     <div class="header">
-      <h1>Groq AI Chat</h1>
-      <p>고속 AI 어시스턴트와 대화하세요</p>
+      <button
+        id="sidebarToggle"
+        class="sidebar-toggle"
+        aria-label="대화 기록 사이드바 열기"
+        aria-expanded="false"
+        aria-controls="sidebarPanel"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/>
+        </svg>
+      </button>
+      <div class="header-logo" aria-hidden="true">
+        <div class="header-logo-circle">
+          <div class="header-logo-dot"></div>
+        </div>
+      </div>
+      <div class="header-text">
+        <h1>Groq AI Chat</h1>
+        <p>고속 AI 어시스턴트와 대화하세요</p>
+      </div>
     </div>
-    <img src="image.png" width="400" alt="챗봇 이미지">
+    <img src="image.png" alt="챗봇 캐릭터 일러스트" class="chatbot-illustration">
 
     <!-- 채팅 영역 -->
-    <div class="chat-container" id="chatContainer">
+    <div class="chat-container" id="chatContainer" role="log" aria-live="polite" aria-label="채팅 내용">
       <!-- 초기 환영 화면 -->
       <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-content">
@@ -55,13 +79,8 @@
               </div>
             </div>
           </div>
-          <h2> AI Chat</h2>
+          <h2>AI Chat</h2>
           <p>무엇을 도와드릴까요?</p>
-          <div class="welcome-suggestions">
-            <div class="suggestion-item">💡 질문하기</div>
-            <div class="suggestion-item">📝 텍스트 작성</div>
-            <div class="suggestion-item">🔍 분석하기</div>
-          </div>
         </div>
       </div>
     </div>
@@ -69,6 +88,7 @@
     <!-- 입력 영역 -->
     <div class="input-area">
       <div class="input-group">
+        <label for="q" class="sr-only">메시지 입력</label>
         <input
           id="q"
           type="text"
@@ -79,6 +99,9 @@
       </div>
     </div>
   </div>
+
+  <!-- 축하 컨페티 효과용 캔버스 (장식용, 스크린 리더 무시) -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
 
   <script src="scripts/app.js"></script>
 </body>
