@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계산기 — 11번가 Design System</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root {
+      --brand-gradient: linear-gradient(135deg, #FF5A2E 0%, #FF0038 50%, #FF00EF 100%);
+      --primary: #FF0038;
+      --gray-01: #000000;
+      --gray-02: #111111;
+      --gray-03: #333333;
+      --gray-04: #666666;
+      --gray-05: #777777;
+      --gray-07: #999999;
+      --gray-09: #CCCCCC;
+      --gray-10: #DDDDDD;
+      --gray-11: #EEEEEE;
+      --gray-12: #F4F4F4;
+      --gray-13: #FAFAFA;
+      --gray-14: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f1ff 0%, #fff5f7 100%);
+      color: var(--gray-03);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .calculator-container {
+      width: 100%;
+      max-width: 360px;
+      background: var(--gray-14);
+      border-radius: 24px;
+      border: 1px solid var(--gray-11);
+      padding: 16px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.12),
+                  0 0 0 1px var(--gray-11);
+    }
+
+    .display {
+      margin-bottom: 24px;
+      text-align: right;
+      padding: 24px 16px;
+      background: var(--gray-02);
+      border-radius: 16px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1px solid rgba(255, 0, 56, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--brand-gradient);
+    }
+
+    .display-previous {
+      font-size: 13px;
+      color: var(--gray-07);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .display-current {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--gray-14);
+      letter-spacing: -0.03em;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .button-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .row-controls {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .row-numbers {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .row-bottom {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Pretendard', inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+      transition: transform 80ms ease-out,
+                  box-shadow 80ms ease-out,
+                  background-color 80ms ease,
+                  filter 80ms ease;
+    }
+
+    .btn-number {
+      background: var(--gray-14);
+      border: 1px solid var(--gray-11);
+      color: var(--gray-01);
+      font-weight: 600;
+      box-shadow: 0 4px 0 var(--gray-10);
+    }
+
+    .btn-number:hover {
+      background: var(--gray-12);
+    }
+
+    .btn-number:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 var(--gray-10);
+    }
+
+    .btn-operation {
+      background: var(--gray-12);
+      border: 1px solid var(--gray-11);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 18px;
+      box-shadow: 0 4px 0 var(--gray-10);
+    }
+
+    .btn-operation:hover {
+      background: var(--gray-11);
+    }
+
+    .btn-operation:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 var(--gray-10);
+    }
+
+    .btn-equals {
+      background: var(--brand-gradient);
+      border: none;
+      color: var(--gray-14);
+      font-weight: 700;
+      font-size: 18px;
+      grid-column: 1 / 4;
+      min-height: 64px;
+      box-shadow: 0 6px 0 rgba(204, 0, 45, 0.4);
+    }
+
+    .btn-equals:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-equals:active {
+      transform: translateY(6px);
+      box-shadow: 0 0 0 rgba(204, 0, 45, 0.4);
+    }
+
+    .btn-clear {
+      background: rgba(255, 0, 56, 0.08);
+      border: 1px solid rgba(255, 0, 56, 0.2);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 0 rgba(255, 0, 56, 0.1);
+    }
+
+    .btn-clear:hover {
+      background: rgba(255, 0, 56, 0.12);
+    }
+
+    .btn-clear:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 rgba(255, 0, 56, 0.1);
+    }
+
+    .btn-delete {
+      background: var(--gray-12);
+      border: 1px solid var(--gray-11);
+      color: var(--gray-03);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 0 var(--gray-10);
+    }
+
+    .btn-delete:hover {
+      background: var(--gray-11);
+    }
+
+    .btn-delete:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 var(--gray-10);
+    }
+
+    button:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+
+      .calculator-container {
+        padding: 8px;
+        max-width: 100%;
+      }
+
+      .display {
+        min-height: 100px;
+        padding: 16px;
+      }
+
+      .display-current {
+        font-size: 28px;
+      }
+
+      button {
+        min-height: 48px;
+        font-size: 14px;
+      }
+
+      .btn-equals {
+        min-height: 52px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator-container">
+    <div class="display">
+      <div class="display-previous" id="display-previous"></div>
+      <div class="display-current" id="display-current">0</div>
+    </div>
+
+    <div class="buttons-container">
+      <div class="button-row row-controls">
+        <button class="btn-clear" data-action="clear">C</button>
+        <button class="btn-delete" data-action="delete">←</button>
+        <button class="btn-operation" data-operation="/">÷</button>
+        <button class="btn-operation" data-operation="*">×</button>
+      </div>
+
+      <div class="button-row row-numbers">
+        <button class="btn-number" data-number="7">7</button>
+        <button class="btn-number" data-number="8">8</button>
+        <button class="btn-number" data-number="9">9</button>
+        <button class="btn-operation" data-operation="-">−</button>
+      </div>
+
+      <div class="button-row row-numbers">
+        <button class="btn-number" data-number="4">4</button>
+        <button class="btn-number" data-number="5">5</button>
+        <button class="btn-number" data-number="6">6</button>
+        <button class="btn-operation" data-operation="+">+</button>
+      </div>
+
+      <div class="button-row row-numbers">
+        <button class="btn-number" data-number="1">1</button>
+        <button class="btn-number" data-number="2">2</button>
+        <button class="btn-number" data-number="3">3</button>
+        <button class="btn-operation" data-operation="%">%</button>
+      </div>
+
+      <div class="button-row row-bottom">
+        <button class="btn-number" data-number="0">0</button>
+        <button class="btn-number" data-number=".">·</button>
+        <button class="btn-operation" data-operation="/">÷</button>
+      </div>
+
+      <button class="btn-equals" data-action="equals">=</button>
+    </div>
+  </div>
+
+  <script>
+    class Calculator {
+      constructor() {
+        this.currentValue = '0';
+        this.previousValue = '';
+        this.operation = null;
+        this.updateDisplay();
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        document.querySelectorAll('[data-number]').forEach(btn => {
+          btn.addEventListener('click', (e) => this.handleNumber(e.target.dataset.number));
+        });
+
+        document.querySelectorAll('[data-operation]').forEach(btn => {
+          btn.addEventListener('click', (e) => this.handleOperation(e.target.dataset.operation));
+        });
+
+        const clearBtn = document.querySelector('[data-action="clear"]');
+        if (clearBtn) clearBtn.addEventListener('click', () => this.clear());
+
+        const deleteBtn = document.querySelector('[data-action="delete"]');
+        if (deleteBtn) deleteBtn.addEventListener('click', () => this.delete());
+
+        const equalsBtn = document.querySelector('[data-action="equals"]');
+        if (equalsBtn) equalsBtn.addEventListener('click', () => this.calculate());
+
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+      }
+
+      handleNumber(num) {
+        if (num === '.') {
+          if (this.currentValue.includes('.')) return;
+          this.currentValue += num;
+        } else {
+          if (this.currentValue === '0') {
+            this.currentValue = num;
+          } else {
+            this.currentValue += num;
+          }
+        }
+        this.updateDisplay();
+      }
+
+      handleOperation(op) {
+        if (this.currentValue === '') return;
+
+        if (this.previousValue !== '' && this.operation) {
+          this.calculate();
+        }
+
+        this.operation = op;
+        this.previousValue = this.currentValue;
+        this.currentValue = '';
+        this.updateDisplay();
+      }
+
+      calculate() {
+        if (this.operation === null || this.previousValue === '' || this.currentValue === '') return;
+
+        const prev = parseFloat(this.previousValue);
+        const curr = parseFloat(this.currentValue);
+        let result = 0;
+
+        switch (this.operation) {
+          case '+':
+            result = prev + curr;
+            break;
+          case '-':
+            result = prev - curr;
+            break;
+          case '*':
+            result = prev * curr;
+            break;
+          case '/':
+            result = curr === 0 ? 0 : prev / curr;
+            break;
+          case '%':
+            result = prev % curr;
+            break;
+        }
+
+        this.currentValue = String(result);
+        this.operation = null;
+        this.previousValue = '';
+        this.updateDisplay();
+      }
+
+      delete() {
+        if (this.currentValue === '0') return;
+        this.currentValue = this.currentValue.slice(0, -1) || '0';
+        this.updateDisplay();
+      }
+
+      clear() {
+        this.currentValue = '0';
+        this.previousValue = '';
+        this.operation = null;
+        this.updateDisplay();
+      }
+
+      updateDisplay() {
+        document.getElementById('display-current').textContent = this.currentValue;
+
+        let prevText = '';
+        if (this.previousValue && this.operation) {
+          prevText = `${this.previousValue} ${this.operation}`;
+        }
+        document.getElementById('display-previous').textContent = prevText;
+      }
+
+      handleKeyboard(e) {
+        if (e.key >= '0' && e.key <= '9') {
+          this.handleNumber(e.key);
+        } else if (e.key === '.') {
+          this.handleNumber('.');
+        } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+          this.handleOperation(e.key);
+        } else if (e.key === 'Enter' || e.key === '=') {
+          e.preventDefault();
+          this.calculate();
+        } else if (e.key === 'Backspace') {
+          e.preventDefault();
+          this.delete();
+        } else if (e.key === 'Escape') {
+          this.clear();
+        }
+      }
+    }
+
+    new Calculator();
+  </script>
+</body>
+</html>

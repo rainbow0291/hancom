@@ -1,0 +1,315 @@
+/* =========================================================================
+   Wanted Calculator — built on the Wanted Design System tokens.
+   Discipline everywhere; the one deliberate risk is the brand-color
+   keypress bloom (see .bloom-*), which the base system would never allow
+   on chrome — spent here on purpose as the signature moment.
+   ========================================================================= */
+
+:root {
+  /* type */
+  --font-display: "Wanted Sans Variable", "Wanted Sans", "Pretendard Variable", system-ui, sans-serif;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  /* brand gradient (symbol mark stops) */
+  --grad-1: oklch(0.563 0.232 257);   /* blue-800  #0066FF */
+  --grad-2: oklch(0.708 0.273 354);   /* magenta   #FF53C0 */
+  --grad-3: oklch(0.665 0.218 38);    /* coral-600 #FF5E00 */
+
+  /* radius ladder */
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-full: 9999px;
+
+  /* spacing */
+  --gap: 8px;
+}
+
+/* -------- Light theme (default) -------- */
+[data-theme="light"] {
+  --bg-page: oklch(0.972 0.002 286);   /* neutral-50 */
+  --bg-surface: oklch(1 0 0);
+  --bg-muted: oklch(0.961 0.002 286);
+  --bg-brand: oklch(0.563 0.232 257);
+  --bg-brand-hover: oklch(0.484 0.205 258);   /* blue-900 */
+  --bg-brand-subtle: oklch(0.954 0.022 250);
+
+  --fg-strong: oklch(0.148 0.004 277);
+  --fg-default: oklch(0.259 0.010 273 / 0.88);
+  --fg-secondary: oklch(0.298 0.010 273 / 0.61);
+  --fg-tertiary: oklch(0.298 0.010 273 / 0.43);
+  --fg-on-brand: oklch(1 0 0);
+  --fg-brand: oklch(0.563 0.232 257);
+  --fg-danger: oklch(0.546 0.220 27);
+
+  --border-subtle: oklch(0.521 0.018 273 / 0.08);
+  --border-default: oklch(0.521 0.018 273 / 0.22);
+  --fill-neutral: oklch(0.521 0.018 273 / 0.10);
+  --fill-neutral-hover: oklch(0.521 0.018 273 / 0.16);
+
+  --focus-ring: oklch(0.563 0.232 257 / 0.28);
+  --shadow-pop: 0 8px 24px oklch(0 0 0 / 0.10);
+  --bloom-blend: normal;
+  --bloom-alpha: 0.5;
+}
+
+/* -------- Dark theme -------- */
+[data-theme="dark"] {
+  --bg-page: oklch(0.135 0.002 286);   /* neutral-970 */
+  --bg-surface: oklch(0.166 0.005 271);
+  --bg-muted: oklch(0.196 0.008 273);
+  --bg-brand: oklch(0.563 0.232 257);
+  --bg-brand-hover: oklch(0.607 0.225 257);
+  --bg-brand-subtle: oklch(0.149 0.069 257);
+
+  --fg-strong: oklch(1 0 0);
+  --fg-default: oklch(1 0 0 / 0.88);
+  --fg-secondary: oklch(1 0 0 / 0.61);
+  --fg-tertiary: oklch(1 0 0 / 0.43);
+  --fg-on-brand: oklch(1 0 0);
+  --fg-brand: oklch(0.715 0.155 255);   /* blue-400 */
+  --fg-danger: oklch(0.715 0.220 27);
+
+  --border-subtle: oklch(1 0 0 / 0.08);
+  --border-default: oklch(1 0 0 / 0.22);
+  --fill-neutral: oklch(1 0 0 / 0.08);
+  --fill-neutral-hover: oklch(1 0 0 / 0.14);
+
+  --focus-ring: oklch(0.563 0.232 257 / 0.40);
+  --shadow-pop: 0 8px 24px oklch(0 0 0 / 0.40);
+  --bloom-blend: screen;
+  --bloom-alpha: 0.65;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg-page);
+  color: var(--fg-default);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss20", "calt", "kern";
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms ease;
+}
+
+/* ===================== Calculator shell ===================== */
+.calc {
+  position: relative;
+  z-index: 1;
+  width: min(384px, 100%);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-16);
+  padding: 20px;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.calc__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--grad-1) 0%, var(--grad-2) 50%, var(--grad-3) 100%);
+}
+
+.calc__label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg-secondary);
+}
+
+.iconbtn {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--fg-default);
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.iconbtn:hover { background: var(--bg-muted); }
+.iconbtn .ic { width: 20px; height: 20px; }
+.iconbtn .ic--moon { display: none; }
+[data-theme="dark"] .iconbtn .ic--sun { display: none; }
+[data-theme="dark"] .iconbtn .ic--moon { display: block; }
+
+/* ===================== Screen ===================== */
+.screen {
+  padding: 8px 4px 20px;
+  text-align: right;
+  overflow: hidden;
+}
+
+.screen__expr {
+  min-height: 22px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--fg-tertiary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.screen__result {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 13vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--fg-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+.screen__result.is-error {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg-danger);
+}
+
+/* ===================== Keypad ===================== */
+.pad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.key {
+  position: relative;
+  height: 60px;
+  border: none;
+  border-radius: var(--r-12);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 120ms ease, color 120ms ease, transform 90ms ease;
+}
+.key:active { transform: scale(0.96); }
+.key:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* digits + dot — neutral tertiary fill */
+.key--num {
+  background: var(--fill-neutral);
+  color: var(--fg-default);
+}
+.key--num:hover { background: var(--fill-neutral-hover); }
+.key--zero {
+  grid-column: span 2;
+  text-align: center;
+}
+
+/* function keys — quiet muted fill */
+.key--func {
+  background: var(--bg-muted);
+  color: var(--fg-secondary);
+  font-size: 18px;
+}
+.key--func:hover { color: var(--fg-default); }
+
+/* operators — brand-subtle, invert-fill when active (chip pattern) */
+.key--op {
+  background: var(--bg-brand-subtle);
+  color: var(--fg-brand);
+  font-size: 24px;
+  font-weight: 700;
+}
+.key--op:hover { filter: brightness(0.97); }
+.key--op.is-active {
+  background: var(--bg-brand);
+  color: var(--fg-on-brand);
+}
+
+/* equals — solid brand primary */
+.key--eq {
+  background: var(--bg-brand);
+  color: var(--fg-on-brand);
+  font-size: 24px;
+  font-weight: 700;
+}
+.key--eq:hover { background: var(--bg-brand-hover); }
+
+/* ===================== Signature: brand bloom ===================== */
+.bloom-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bloom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44vmax;
+  height: 44vmax;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.25);
+  background: radial-gradient(circle at center,
+    var(--grad-1) 0%,
+    var(--grad-2) 42%,
+    var(--grad-3) 68%,
+    transparent 72%);
+  filter: blur(48px);
+  mix-blend-mode: var(--bloom-blend);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: bloom-pop 620ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.bloom--full {
+  width: 150vmax;
+  height: 150vmax;
+  filter: blur(80px);
+  animation-duration: 820ms;
+}
+
+@keyframes bloom-pop {
+  0%   { opacity: 0;                 transform: translate(-50%, -50%) scale(0.2); }
+  22%  { opacity: var(--bloom-alpha); }
+  100% { opacity: 0;                 transform: translate(-50%, -50%) scale(1.7); }
+}
+
+/* ===================== Accessibility ===================== */
+@media (prefers-reduced-motion: reduce) {
+  .key, .iconbtn, body, .calc { transition: none; }
+  .key:active { transform: none; }
+  .bloom { display: none; }
+}
+
+@media (max-width: 400px) {
+  .calc { padding: 16px; border-radius: var(--r-12); }
+  .key { height: 56px; }
+}

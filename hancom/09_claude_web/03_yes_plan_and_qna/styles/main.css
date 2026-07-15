@@ -1,0 +1,196 @@
+/* ===== 기본 리셋 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --neon-purple: #a855f7;
+  --neon-pink: #ec4899;
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --text: #f5f3ff;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "Malgun Gothic", system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  overflow: hidden;
+  /* 딥 네이비/보라 radial 배경 */
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(168, 56, 247, 0.25), transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.22), transparent 55%),
+    #0a0713;
+}
+
+/* ===== 별 내리는 배경 ===== */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  top: -10px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  0%   { transform: translateY(-10vh) scale(0.6); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(110vh) scale(1); opacity: 0; }
+}
+
+/* ===== 계산기 카드 (글래스) ===== */
+.calculator {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 360px);
+  padding: 24px;
+  border-radius: 28px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 0 30px rgba(168, 56, 247, 0.45),
+    0 0 60px rgba(236, 72, 153, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* ===== 계산 기록 ===== */
+.history {
+  max-height: 88px;
+  overflow-y: auto;
+  padding: 4px 14px 8px;
+  text-align: right;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(180, 175, 200, 0.55);
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.history::-webkit-scrollbar {
+  width: 5px;
+}
+
+.history::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.history__item {
+  word-break: break-all;
+}
+
+/* ===== 디스플레이 ===== */
+.display {
+  text-align: right;
+  padding: 12px 14px 20px;
+  min-height: 96px;
+  word-break: break-all;
+}
+
+.display__previous {
+  font-size: 1rem;
+  min-height: 1.2rem;
+  color: rgba(245, 243, 255, 0.55);
+  letter-spacing: 1px;
+}
+
+.display__current {
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+}
+
+/* ===== 버튼 그리드 ===== */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.btn {
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 16px 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 14px rgba(168, 56, 247, 0.6);
+}
+
+.btn:active {
+  transform: scale(0.94);
+}
+
+.btn--op {
+  color: var(--neon-purple);
+  font-weight: 700;
+}
+
+.btn--op:hover {
+  box-shadow: 0 0 16px rgba(168, 56, 247, 0.9);
+}
+
+.btn--func {
+  color: var(--neon-pink);
+}
+
+.btn--func:hover {
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.8);
+}
+
+.btn--equals {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.7);
+}
+
+.btn--equals:hover {
+  box-shadow: 0 0 26px rgba(236, 72, 153, 1);
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 400px) {
+  .calculator { padding: 18px; border-radius: 22px; }
+  .display__current { font-size: 2.1rem; }
+  .btn { padding: 14px 0; font-size: 1.15rem; }
+  .buttons { gap: 9px; }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>네온 계산기 ✨</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <!-- 별이 내리는 배경 -->
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <main class="calculator">
+    <div class="history" id="history" aria-label="계산 기록"></div>
+
+    <div class="display">
+      <div class="display__previous" id="previous"></div>
+      <div class="display__current" id="current">0</div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn--func" data-action="clear">C</button>
+      <button class="btn btn--func" data-action="delete">⌫</button>
+      <button class="btn btn--func" data-action="percent">%</button>
+      <button class="btn btn--op" data-action="operator" data-value="÷">÷</button>
+
+      <button class="btn" data-action="number" data-value="7">7</button>
+      <button class="btn" data-action="number" data-value="8">8</button>
+      <button class="btn" data-action="number" data-value="9">9</button>
+      <button class="btn btn--op" data-action="operator" data-value="×">×</button>
+
+      <button class="btn" data-action="number" data-value="4">4</button>
+      <button class="btn" data-action="number" data-value="5">5</button>
+      <button class="btn" data-action="number" data-value="6">6</button>
+      <button class="btn btn--op" data-action="operator" data-value="−">−</button>
+
+      <button class="btn" data-action="number" data-value="1">1</button>
+      <button class="btn" data-action="number" data-value="2">2</button>
+      <button class="btn" data-action="number" data-value="3">3</button>
+      <button class="btn btn--op" data-action="operator" data-value="+">+</button>
+
+      <button class="btn btn--func" data-action="negate">±</button>
+      <button class="btn" data-action="number" data-value="0">0</button>
+      <button class="btn" data-action="decimal" data-value=".">.</button>
+      <button class="btn btn--equals" data-action="equals">=</button>
+    </div>
+  </main>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

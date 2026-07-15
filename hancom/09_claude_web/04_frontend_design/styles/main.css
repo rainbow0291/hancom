@@ -1,0 +1,333 @@
+/* ============================================================
+   Tally — 기록하는 계산기
+   미니멀 모던: 차가운 종이-잉크. 대담함은 딱 한 곳(빨강)에만.
+   ============================================================ */
+
+:root {
+  /* Color */
+  --paper:    #E9EAEC; /* page */
+  --surface:  #FBFBFC; /* card */
+  --ink:      #15171B; /* primary text / digits */
+  --muted:    #9A9DA4; /* secondary labels */
+  --hairline: #D7D9DD; /* thin dividers */
+  --red:      #E5372A; /* single accent: equals, totals, negatives */
+
+  /* Derived */
+  --key-face:   #FFFFFF;
+  --key-shadow: 0 1px 0 var(--hairline), 0 2px 6px rgba(21, 23, 27, 0.05);
+  --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset,
+                 0 24px 60px -28px rgba(21, 23, 27, 0.28),
+                 0 2px 8px -2px rgba(21, 23, 27, 0.08);
+
+  /* Type */
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--display);
+  color: var(--ink);
+  background:
+    radial-gradient(120% 80% at 50% -10%, #F1F2F4 0%, var(--paper) 55%) fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.stage {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+/* ---------- Card ---------- */
+.machine {
+  width: min(760px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0 0.25rem 1.1rem;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 1.4rem;
+}
+
+.wordmark {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* red dot after the wordmark — the ribbon accent, used once */
+.wordmark::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 3px;
+  border-radius: 50%;
+  background: var(--red);
+  vertical-align: baseline;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ---------- Deck: keypad + tape ---------- */
+.deck {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: stretch;
+}
+
+/* ---------- Console (readout + keypad) ---------- */
+.console { display: flex; flex-direction: column; gap: 1rem; }
+
+.readout {
+  display: block;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: clamp(2rem, 7vw, 2.85rem);
+  line-height: 1.1;
+  text-align: right;
+  color: var(--ink);
+  padding: 0.5rem 0.65rem 0.35rem;
+  border-bottom: 2px solid var(--ink);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.readout.is-error { color: var(--red); }
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.55rem;
+}
+
+.key {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--key-face);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 0;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  box-shadow: var(--key-shadow);
+  transition: transform 0.08s var(--ease), background 0.12s var(--ease),
+    box-shadow 0.12s var(--ease);
+}
+
+.key:hover { background: #F4F5F7; }
+
+.key.is-press,
+.key:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+
+/* function keys (AC / ⌫ / %) — quieter */
+.key--fn {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* operator keys — ink, slightly heavier glyph */
+.key--op {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.key--wide { aspect-ratio: auto; grid-column: span 2; }
+
+.key--equals {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 10px -2px rgba(229, 55, 42, 0.5);
+}
+.key--equals:hover { background: #d93225; }
+
+/* ---------- Tape (the signature) ---------- */
+.tape {
+  display: flex;
+  flex-direction: column;
+  background:
+    repeating-linear-gradient(
+      var(--surface) 0 27px,
+      #F3F4F6 27px 28px
+    );
+  border: 1px solid var(--hairline);
+  border-radius: 4px 4px 10px 10px;
+  overflow: hidden;
+  min-height: 260px;
+}
+
+/* perforated top edge of the paper roll */
+.tape__perf {
+  display: block;
+  height: 10px;
+  background:
+    radial-gradient(circle at 6px 10px, transparent 3px, var(--surface) 3.5px) repeat-x;
+  background-size: 12px 10px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.tape__head { background: var(--surface); }
+
+.tape__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.tape__clear {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0.15rem 0.15rem;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+.tape__clear:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+.tape__roll {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0.85rem 0.85rem;
+  flex: 1;
+  overflow-y: auto;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  line-height: 28px; /* aligns to the ruled background */
+  display: flex;
+  flex-direction: column;
+}
+
+.tape__empty {
+  color: var(--muted);
+  font-family: var(--display);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  align-self: center;
+  text-align: center;
+  margin: auto 0;
+  padding: 1rem 0;
+}
+
+/* one printed line: operator column + value column */
+.tape__line {
+  display: grid;
+  grid-template-columns: 1.4ch 1fr;
+  gap: 0.5ch;
+  height: 28px;
+  align-items: center;
+  text-align: right;
+  color: var(--ink);
+}
+
+.tape__line .op { color: var(--muted); text-align: center; }
+
+.tape__line.is-total {
+  color: var(--red);
+  font-weight: 600;
+  border-top: 1px solid var(--hairline);
+}
+.tape__line.is-total .op { color: var(--red); }
+
+.tape__line.is-neg { color: var(--red); } /* negatives print red, like a ledger */
+
+/* print animation */
+@keyframes print-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tape__line { animation: print-in 0.22s var(--ease) both; }
+
+/* ---------- Hint ---------- */
+.hint {
+  max-width: 760px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.7;
+}
+
+kbd {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 0.05em 0.4em;
+  color: var(--ink);
+}
+
+/* ---------- Focus (visible, red) ---------- */
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.key:focus-visible { outline-offset: 3px; }
+
+/* ---------- Responsive: stack on mobile ---------- */
+@media (max-width: 560px) {
+  .deck { grid-template-columns: 1fr; }
+  .tape { min-height: 200px; order: 2; }
+  .console { order: 1; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tally — 기록하는 계산기</title>
+  <meta name="description" content="모든 계산을 종이 테이프에 기록하는 미니멀 계산기" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <main class="stage">
+    <section class="machine" aria-label="계산기">
+      <!-- Wordmark -->
+      <header class="masthead">
+        <h1 class="wordmark">Tally</h1>
+        <p class="tagline">기록하는 계산기</p>
+      </header>
+
+      <div class="deck">
+        <!-- Keypad side -->
+        <div class="console">
+          <output
+            class="readout"
+            id="readout"
+            aria-live="polite"
+            aria-label="현재 값"
+          >0</output>
+
+          <div class="keypad" id="keypad" role="group" aria-label="키패드">
+            <button class="key key--fn" data-action="clear" type="button" aria-label="전체 지우기">AC</button>
+            <button class="key key--fn" data-action="back" type="button" aria-label="한 글자 지우기">⌫</button>
+            <button class="key key--fn" data-op="%" type="button" aria-label="백분율">%</button>
+            <button class="key key--op" data-op="÷" type="button" aria-label="나누기">÷</button>
+
+            <button class="key" data-digit="7" type="button">7</button>
+            <button class="key" data-digit="8" type="button">8</button>
+            <button class="key" data-digit="9" type="button">9</button>
+            <button class="key key--op" data-op="×" type="button" aria-label="곱하기">×</button>
+
+            <button class="key" data-digit="4" type="button">4</button>
+            <button class="key" data-digit="5" type="button">5</button>
+            <button class="key" data-digit="6" type="button">6</button>
+            <button class="key key--op" data-op="−" type="button" aria-label="빼기">−</button>
+
+            <button class="key" data-digit="1" type="button">1</button>
+            <button class="key" data-digit="2" type="button">2</button>
+            <button class="key" data-digit="3" type="button">3</button>
+            <button class="key key--op" data-op="+" type="button" aria-label="더하기">+</button>
+
+            <button class="key key--wide" data-digit="0" type="button">0</button>
+            <button class="key" data-action="decimal" type="button" aria-label="소수점">.</button>
+            <button class="key key--equals" data-action="equals" type="button" aria-label="계산">=</button>
+          </div>
+        </div>
+
+        <!-- Tape side (the signature) -->
+        <aside class="tape" aria-label="계산 기록">
+          <div class="tape__head">
+            <span class="tape__perf" aria-hidden="true"></span>
+            <div class="tape__title">
+              <span>Tape</span>
+              <button class="tape__clear" id="clearTape" type="button">Clear tape</button>
+            </div>
+          </div>
+
+          <ol class="tape__roll" id="tapeRoll" role="log" aria-live="polite" aria-label="계산 기록 목록">
+            <li class="tape__empty" id="tapeEmpty">아직 계산 기록이 없어요. 숫자를 입력해 보세요.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <p class="hint">
+      키보드도 됩니다 · 숫자 <kbd>0–9</kbd> · 연산 <kbd>+ − * /</kbd> ·
+      <kbd>Enter</kbd> 계산 · <kbd>⌫</kbd> 삭제 · <kbd>Esc</kbd> 초기화
+    </p>
+  </main>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+/* ============================================================
+   Apple-style Calculator
+   Tokens mapped directly from APPLE_DESIGN.md
+   ============================================================ */
+
+:root {
+  /* Colors — single Action Blue accent, parchment surfaces */
+  --primary: #0066cc;
+  --primary-focus: #0071e3;
+  --canvas: #ffffff;
+  --canvas-parchment: #f5f5f7;
+  --surface-pearl: #fafafc;
+  --surface-black: #000000;
+  --surface-tile-1: #272729;
+  /* iPhone 17 Pro — Cosmic Orange */
+  --cosmic-orange: #d4551f;
+  --ink: #1d1d1f;
+  --ink-muted-80: #333333;
+  --ink-muted-48: #7a7a7a;
+  --hairline: #e0e0e0;
+  --divider-soft: rgba(0, 0, 0, 0.04);
+  --on-dark: #ffffff;
+
+  /* Radius scale */
+  --rounded-sm: 8px;
+  --rounded-lg: 18px;
+  --rounded-pill: 9999px;
+
+  /* The single system product-shadow — reserved for the product only */
+  --product-shadow: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
+
+  /* Type: Inter as SF Pro substitute */
+  --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--canvas-parchment);
+  /* Inter needs "ss03" to approximate SF Pro's rounded a */
+  font-feature-settings: "ss03";
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   global-nav — 44px true-black bar, quiet nav-link type
+   ============================================================ */
+.global-nav {
+  height: 44px;
+  background: var(--surface-black);
+  color: var(--on-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.global-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.12px;
+  color: var(--on-dark);
+}
+
+.global-nav__logo {
+  width: 14px;
+  height: 17px;
+  fill: var(--on-dark);
+  display: block;
+}
+
+.global-nav__utility {
+  display: flex;
+  gap: 20px;
+}
+
+.global-nav__link {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.12px;
+  color: var(--on-dark);
+  opacity: 0.85;
+}
+
+/* ============================================================
+   Hero tile — parchment gallery surface
+   ============================================================ */
+.hero {
+  flex: 1;
+  background: var(--canvas-parchment);
+  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__intro {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hero__headline {
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.28px;
+  /* re-create the Apple tight feel on the Inter substitute */
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.hero__tagline {
+  margin-top: 16px;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: 0.196px;
+  color: var(--ink);
+}
+
+/* ============================================================
+   calculator — the "product"; white body + the one system shadow
+   ============================================================ */
+.calculator {
+  width: 100%;
+  max-width: 360px;
+  background: var(--cosmic-orange);
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--product-shadow);
+  padding: 24px;
+}
+
+.calculator__display {
+  padding: 16px 8px 24px;
+  text-align: right;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.calculator__expression {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  color: rgba(255, 255, 255, 0.7);
+  min-height: 25px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.calculator__result {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Keypad — 4-column grid */
+.calculator__keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.key {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 400;
+  height: 64px;
+  border: none;
+  border-radius: var(--rounded-pill);
+  cursor: pointer;
+  color: var(--ink);
+  transition: transform 0.08s ease, background-color 0.15s ease;
+  /* every touch target ≥ 44px */
+  min-height: 44px;
+}
+
+/* system-wide micro-interaction */
+.key:active,
+.key.is-pressed {
+  transform: scale(0.95);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+}
+
+/* Utility keys — pearl fill, ink text */
+.key--utility {
+  background: var(--canvas-parchment);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Digit keys — pearl-white fill with a soft hairline ring */
+.key--digit {
+  background: var(--surface-pearl);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--divider-soft);
+}
+
+/* Operator keys — the single Action Blue accent carries every action */
+.key--operator {
+  background: var(--primary);
+  color: var(--on-dark);
+  font-weight: 600;
+}
+
+/* 0 spans two columns */
+.key--zero {
+  grid-column: span 2;
+}
+
+/* ============================================================
+   Footer — parchment, quiet fine print
+   ============================================================ */
+.footer {
+  background: var(--canvas-parchment);
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.footer__legal {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted-48);
+}
+
+/* ============================================================
+   Responsive — hero headline steps down at doc breakpoints
+   ============================================================ */
+@media (max-width: 1068px) {
+  .hero__headline { font-size: 40px; }
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 48px 20px; }
+  .hero__headline { font-size: 34px; }
+  .hero__tagline { font-size: 24px; }
+}
+
+@media (max-width: 419px) {
+  .hero__headline { font-size: 28px; }
+  .key { height: 58px; font-size: 20px; }
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계산기 테스트</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+    }
+    .calc {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 250px;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="calc">
+    <input id="display" value="0" readonly>
+    <br>
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button onclick="calc.setOp('+')">+</button>
+    <br>
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick="appendNumber('6')">6</button>
+    <button onclick="calc.setOp('-')">-</button>
+    <br>
+    <button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')">8</button>
+    <button onclick="appendNumber('9')">9</button>
+    <button onclick="calc.setOp('*')">*</button>
+    <br>
+    <button onclick="appendNumber('0')">0</button>
+    <button onclick="appendNumber('.')">.</button>
+    <button onclick="calc.calculate()">=</button>
+    <button onclick="calc.clear()">C</button>
+  </div>
+
+  <script>
+    const calc = {
+      display: document.getElementById('display'),
+      current: '0',
+      previous: '',
+      op: null,
+
+      appendNumber(num) {
+        console.log('Appending:', num);
+        if (num === '.') {
+          if (this.current.includes('.')) return;
+          this.current += num;
+        } else {
+          this.current = this.current === '0' ? num : this.current + num;
+        }
+        this.updateDisplay();
+      },
+
+      setOp(operation) {
+        console.log('Operation:', operation);
+        if (this.current === '') return;
+        if (this.previous !== '' && this.op) {
+          this.calculate();
+        }
+        this.op = operation;
+        this.previous = this.current;
+        this.current = '';
+        this.updateDisplay();
+      },
+
+      calculate() {
+        console.log('Calculating:', this.previous, this.op, this.current);
+        if (!this.op || this.previous === '' || this.current === '') return;
+        
+        let result;
+        const a = parseFloat(this.previous);
+        const b = parseFloat(this.current);
+        
+        switch(this.op) {
+          case '+': result = a + b; break;
+          case '-': result = a - b; break;
+          case '*': result = a * b; break;
+          case '/': result = b === 0 ? 0 : a / b; break;
+          default: return;
+        }
+        
+        this.current = String(result);
+        this.op = null;
+        this.previous = '';
+        this.updateDisplay();
+      },
+
+      clear() {
+        console.log('Clear');
+        this.current = '0';
+        this.previous = '';
+        this.op = null;
+        this.updateDisplay();
+      },
+
+      updateDisplay() {
+        this.display.value = this.current;
+      }
+    };
+
+    function appendNumber(num) {
+      calc.appendNumber(num);
+    }
+
+    console.log('계산기 로드됨');
+  </script>
+</body>
+</html>

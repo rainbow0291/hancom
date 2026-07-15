@@ -1,0 +1,148 @@
+:root {
+  --bg: #f2f4f7;
+  --card: #ffffff;
+  --text: #1f2430;
+  --muted: #9aa2b1;
+  --key-bg: #f7f8fa;
+  --key-hover: #eef0f4;
+  --fn-bg: #e9edf3;
+  --accent: #3b82f6;
+  --accent-hover: #2f6fe0;
+  --danger: #ef5350;
+  --shadow: 0 20px 45px rgba(31, 36, 48, 0.12);
+  --radius: 22px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(160deg, #f8fafc 0%, #eef1f6 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+  color: var(--text);
+}
+
+.calculator {
+  width: 100%;
+  max-width: 340px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.display {
+  text-align: right;
+  padding: 12px 8px 20px;
+  overflow: hidden;
+}
+
+.display__preview {
+  min-height: 24px;
+  font-size: 1rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.display__result {
+  margin-top: 6px;
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.key {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 500;
+  padding: 0;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--key-bg);
+  color: var(--text);
+  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.key:hover {
+  background: var(--key-hover);
+}
+
+.key:active {
+  transform: scale(0.95);
+}
+
+.key--fn {
+  background: var(--fn-bg);
+  color: #55607a;
+  font-weight: 600;
+}
+
+.key--op {
+  background: #eaf1ff;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.key--op:hover {
+  background: #dbe8ff;
+}
+
+.key--back {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.key--equals {
+  background: var(--accent);
+  color: #fff;
+}
+
+.key--equals:hover {
+  background: var(--accent-hover);
+}
+
+.key--zero {
+  /* 0은 일반 칸 하나만 차지 */
+}
+
+/* 연산자 활성 상태 표시 */
+.key--op.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 400px) {
+  .calculator {
+    padding: 18px;
+  }
+  .display__result {
+    font-size: 2.5rem;
+  }
+  .key {
+    height: 58px;
+    font-size: 1.2rem;
+  }
+}
